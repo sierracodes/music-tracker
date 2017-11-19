@@ -2,3 +2,6 @@
 *~
 .*~
 \#*
+
+# Ignore .pyc files
+*.pyc
