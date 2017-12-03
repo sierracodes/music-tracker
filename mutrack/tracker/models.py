@@ -63,7 +63,7 @@ class Album(models.Model):
     year = models.IntegerField()
     artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
     rating = models.FloatField(validators=[validate_zero_to_five])
-    primary_genre = models.ForeignKey(PrimaryGenre, on_delete=models.CASCADE)
+    primary_genres = models.ManyToManyField(PrimaryGenre)
     secondary_genres = models.CharField(max_length=200, blank=True, default='')
     comments = models.TextField(blank=True, default='')
     listen_link = models.URLField(blank=True, default='')
