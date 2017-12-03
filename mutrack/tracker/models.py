@@ -39,7 +39,7 @@ class Artist(models.Model):
     name = models.CharField(max_length=120)
 
     def __str__(self):
-        return '[Artist: {}]'.format(self.name)
+        return self.name
 
 
 class Album(models.Model):
@@ -55,7 +55,7 @@ class Album(models.Model):
     listen_link = models.URLField(blank=True, default='')
 
     def __str__(self):
-        return '[Album: {}]'.format(self.name)
+        return self.name
 
     def artist_name(self):
         return self.artist.name
