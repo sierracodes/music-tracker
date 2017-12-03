@@ -28,6 +28,9 @@ class Artist(models.Model):
     """
     name = models.CharField(max_length=120)
 
+    def __str__(self):
+        return '[Artist: {}]'.format(self.name)
+
 
 class Album(models.Model):
     """A model representing an album.
@@ -36,6 +39,9 @@ class Album(models.Model):
     year = models.IntegerField()
     artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
     rating = models.FloatField(validators=[validate_zero_to_five])
+
+    def __str__(self):
+        return '[Album: {}]'.format(self.name)
 
 
 class Listen(models.Model):
