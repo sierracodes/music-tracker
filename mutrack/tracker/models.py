@@ -52,6 +52,7 @@ class Album(models.Model):
     primary_genre = models.ForeignKey(PrimaryGenre, on_delete=models.CASCADE)
     secondary_genres = models.CharField(max_length=200, blank=True, default='')
     comments = models.TextField(blank=True, default='')
+    listen_link = models.URLField(blank=True, default='')
 
     def __str__(self):
         return '[Album: {}]'.format(self.name)
