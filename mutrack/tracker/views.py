@@ -1,14 +1,22 @@
 
 from urllib.parse import unquote_plus
 
-from django.shortcuts import render
 from django.views import generic
 
 from .models import Album
 
 # Views
-def index(request):
-    return render(request, 'tracker/index.html')
+
+class IndexView(generic.ListView):
+    template_name = 'tracker/index.html'
+    context_object_name = 'album_list'
+
+    def get_queryset(self):
+        """Get the list of albums to display by default on the index page.
+
+        """
+        print(Album.objects.all())
+        return Album.objects.all()
 
 
 class AlbumView(generic.DetailView):

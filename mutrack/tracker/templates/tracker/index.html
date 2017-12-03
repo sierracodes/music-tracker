@@ -2,4 +2,34 @@
 {% extends "tracker/base-bootstrap.html" %}
 
 {% block title %}o hai{% endblock %}
-{% block h1 %}o hai{% endblock %}
+{% block h1 %}Album Tracker{% endblock %}
+
+
+{% block body-content %}
+
+<h2>All Albums</h2>
+
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Artist</th>
+        <th>Album</th>
+        <th>Year</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for album in album_list %}
+      <tr>
+        <td>{{ album.artist.name }}</td>
+        <td>{{ album.name }}</td>
+        <td>{{ album.year }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+
+  </table>
+</div>
+
+
+{% endblock %}
