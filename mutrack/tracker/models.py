@@ -56,6 +56,9 @@ class Album(models.Model):
     def __str__(self):
         return '[Album: {}]'.format(self.name)
 
+    def artist_name(self):
+        return self.artist.name
+
 
 class Listen(models.Model):
     """A model representing an instance of listening to an album.
