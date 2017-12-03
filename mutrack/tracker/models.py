@@ -36,7 +36,7 @@ class PrimaryGenre(models.Model):
 class Artist(models.Model):
     """Model representing an artist.
     """
-    name = models.CharField(max_length=120)
+    name = models.CharField(max_length=120, unique=True)
 
     def __str__(self):
         return self.name
