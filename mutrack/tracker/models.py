@@ -22,20 +22,34 @@ def validate_zero_to_five(value):
     if value < 0.0 or value > 5.0:
         raise ValidationError(_('Value not between 0 and 5.'))
 
+class PrimaryGenreManager(models.Manager):
+    def get_by_natural_key(self, name):
+        return self.get(name=name)
+
+
 class PrimaryGenre(models.Model):
     """A model representing a particular genre of music.
 
     These genres will be deliberately broad, so that there are only a handful.
     """
-    name = models.CharField(max_length=60)
+    objects = PrimaryGenreManager()
+
+    name = models.CharField(max_length=60, unique=True)
 
     def __str__(self):
         return self.name
 
 
+class ArtistManager(models.Manager):
+    def get_by_natural_key(self, name):
+        return self.get(name=name)
+
+
 class Artist(models.Model):
     """Model representing an artist.
     """
+    objects = ArtistManager()
+
     name = models.CharField(max_length=120, unique=True)
 
     def __str__(self):
