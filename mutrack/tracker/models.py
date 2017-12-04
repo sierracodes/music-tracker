@@ -74,6 +74,9 @@ class Album(models.Model):
     def artist_name(self):
         return self.artist.name
 
+    class Meta:
+        unique_together = ('name', 'artist')
+
 
 class Listen(models.Model):
     """A model representing an instance of listening to an album.
