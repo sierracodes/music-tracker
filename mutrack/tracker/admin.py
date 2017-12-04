@@ -7,6 +7,6 @@ admin.site.register(Artist)
 admin.site.register(PrimaryGenre)
 
 class AlbumAdmin(admin.ModelAdmin):
-    list_display = ['name', 'artist_name', 'year']
+    list_display = ['name', 'artist_name', 'year', 'rating']
 
 admin.site.register(Album, AlbumAdmin)

@@ -55,6 +55,9 @@ class Artist(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ('name',)
+
 
 class Album(models.Model):
     """A model representing an album.
@@ -76,6 +79,7 @@ class Album(models.Model):
 
     class Meta:
         unique_together = ('name', 'artist')
+        ordering = ('-rating', 'artist', 'name')
 
 
 class Listen(models.Model):

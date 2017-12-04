@@ -16,6 +16,8 @@
         <th>Artist</th>
         <th>Album</th>
         <th>Year</th>
+        <th>Rating</th>
+        <th>Genres</th>
       </tr>
     </thead>
     <tbody>
@@ -24,6 +26,8 @@
         <td>{{ album.artist.name }}</td>
         <td>{{ album.name }}</td>
         <td>{{ album.year }}</td>
+        <td>{{ album.rating }}</td>
+        <td>{{ album.secondary_genres }}</td>
       </tr>
       {% endfor %}
     </tbody>
