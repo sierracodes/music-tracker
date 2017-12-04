@@ -15,7 +15,6 @@ class IndexView(generic.ListView):
         """Get the list of albums to display by default on the index page.
 
         """
-        print(Album.objects.all())
         return Album.objects.all()
 
 
