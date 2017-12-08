@@ -27,15 +27,15 @@
     <tbody>
       {% for album in album_list %}
       <tr>
-        <td><a class="block-anchor" href="{% url 'tracker:album' album.quoted_artist_name album.quoted_album_name %}">
+        <td><a class="block-anchor" href="{% url 'tracker:album' album.artist.quoted_name album.quoted_name %}">
           {{ album.artist.name }}</a></td>
-        <td><a class="block-anchor" href="{% url 'tracker:album' album.quoted_artist_name album.quoted_album_name %}">
+        <td><a class="block-anchor" href="{% url 'tracker:album' album.artist.quoted_name album.quoted_name %}">
           {{ album.name }}</a></td>
-        <td><a class="block-anchor" href="{% url 'tracker:album' album.quoted_artist_name album.quoted_album_name %}">
+        <td><a class="block-anchor" href="{% url 'tracker:album' album.artist.quoted_name album.quoted_name %}">
           {{ album.year }}</a></td>
-        <td><a class="block-anchor" href="{% url 'tracker:album' album.quoted_artist_name album.quoted_album_name %}">
+        <td><a class="block-anchor" href="{% url 'tracker:album' album.artist.quoted_name album.quoted_name %}">
           {{ album.rating }}</a></td>
-        <td><a class="block-anchor" href="{% url 'tracker:album' album.quoted_artist_name album.quoted_album_name %}">
+        <td><a class="block-anchor" href="{% url 'tracker:album' album.artist.quoted_name album.quoted_name %}">
           {{ album.secondary_genres }}</a></td>
       </tr>
       {% endfor %}

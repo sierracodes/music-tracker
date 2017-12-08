@@ -1,7 +1,7 @@
 {% extends "tracker/base-bootstrap.html" %}
 
 {% block title %}o hai{% endblock %}
-{% block h1 %}{{ album.name }}{% endblock %}
+{% block h1 %}<i>{{ album.name }}</i>{% endblock %}
 
 
 {% block body-content %}
@@ -9,9 +9,10 @@
 
   <li>Artist: {{ album.artist.name }}</li>
   <li>Year: {{ album.year }}</li>
-
   <li><a href={{ youtube_search_link }} target=_blank rel="noopener noreferrer">
     Search on YouTube</a></li>
 
 </ul>
+<a href="{% url 'tracker:artist' album.artist.quoted_name %}">
+  All albums by this artist</a>
 {% endblock %}

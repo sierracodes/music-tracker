@@ -56,6 +56,9 @@ class Artist(models.Model):
     def __str__(self):
         return self.name
 
+    def quoted_name(self):
+        return quote_plus(self.name)
+
     class Meta:
         ordering = ('name',)
 
@@ -78,11 +81,8 @@ class Album(models.Model):
     def artist_name(self):
         return self.artist.name
 
-    def quoted_album_name(self):
+    def quoted_name(self):
         return quote_plus(self.name)
-
-    def quoted_artist_name(self):
-        return quote_plus(self.artist.name)
 
     class Meta:
         unique_together = ('name', 'artist')
