@@ -1,8 +1,12 @@
-
 {% extends "tracker/base-bootstrap.html" %}
 
+{% load static %}
+{% block headblock %}
+<link rel="stylesheet" type="text/css" href="{% static 'tracker/style.css' %}" />
+{% endblock %}
+
 {% block title %}o hai{% endblock %}
-{% block h1 %}Album Tracker{% endblock %}
+{# {% block h1 %}Album Tracker{% endblock %} #}
 
 
 {% block body-content %}
@@ -23,11 +27,12 @@
     <tbody>
       {% for album in album_list %}
       <tr>
-        <td>{{ album.artist.name }}</td>
-        <td>{{ album.name }}</td>
-        <td>{{ album.year }}</td>
-        <td>{{ album.rating }}</td>
-        <td>{{ album.secondary_genres }}</td>
+        <td><a class="block-anchor" href="https://google.com" target=_blank>{{ album.artist.name }}</a></td>
+        <td><a class="block-anchor" href="#">{{ album.name }}</a></td>
+        {# <td>{% with i=forloop.counter|stringformat:"s" %}{{ i }}{% endwith %}</td> #}
+        <td><a class="block-anchor" href="#">{{ album.year }}</a></td>
+        <td><a class="block-anchor" href="#">{{ album.rating }}</a></td>
+        <td><a class="block-anchor" href="#">{{ album.secondary_genres }}</a></td>
       </tr>
       {% endfor %}
     </tbody>
