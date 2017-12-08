@@ -1,5 +1,5 @@
 
-from urllib.parse import unquote_plus
+from urllib.parse import quote_plus, unquote_plus
 
 from django.views import generic
 
@@ -35,3 +35,18 @@ class AlbumView(generic.DetailView):
                                       name__iexact=album_name)
 
         return filterset[0]
+
+    def get_context_data(self, **kwargs):
+        """Get context data for the view.
+        """
+        # Call super's method
+        context = super(AlbumView, self).get_context_data(**kwargs)
+
+        artist_and_album = f'{self.kwargs["album_name"]} {self.kwargs["artist"]}'
+        querystr = quote_plus(artist_and_album)
+        youtube_search_link = (f'https://www.youtube.com/results?search_query='
+                               f'{querystr}')
+
+        context['youtube_search_link'] = youtube_search_link
+
+        return context
