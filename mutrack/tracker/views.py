@@ -44,7 +44,7 @@ class AlbumView(generic.DetailView):
         # Call super's method
         context = super(AlbumView, self).get_context_data(**kwargs)
 
-        querystr = '{album}+{artist}'.format(
+        querystr = '{artist}+{album}'.format(
             album=self.kwargs['album_name'], artist=self.kwargs['artist_name'])
 
         youtube_search_link = (f'https://www.youtube.com/results?search_query='
