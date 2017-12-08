@@ -27,7 +27,7 @@ class AlbumView(generic.DetailView):
         Uses the album_name named group in the URL. Redefined so I don't have
         to use the (meaningless) primary key for the album in the URL.
         """
-        artist_name = unquote_plus(self.kwargs['artist'])
+        artist_name = unquote_plus(self.kwargs['artist_name'])
         album_name = unquote_plus(self.kwargs['album_name'])
         super_qset = super(AlbumView, self).get_queryset()
 
@@ -42,8 +42,9 @@ class AlbumView(generic.DetailView):
         # Call super's method
         context = super(AlbumView, self).get_context_data(**kwargs)
 
-        artist_and_album = f'{self.kwargs["album_name"]} {self.kwargs["artist"]}'
-        querystr = quote_plus(artist_and_album)
+        querystr = '{album}+{artist}'.format(
+            album=self.kwargs["album_name"], artist=self.kwargs["artist_name"])
+
         youtube_search_link = (f'https://www.youtube.com/results?search_query='
                                f'{querystr}')
 
