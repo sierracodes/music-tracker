@@ -1,4 +1,6 @@
-
+/*
+Javascript file for tracker application.
+*/
 
 // Case-insensitive contains selector
 jQuery.expr[':'].containsNoCase = function(a, i, m) {
@@ -12,9 +14,9 @@ $("#album-search").keyup(filterAlbums);
 
 function filterAlbums(event) {
   var text = event.target.value;
-
   var selectingOn = $("#search-selector").val();
 
+  // Get matching and non-matching rows
   if (selectingOn === "artist") {
     var match = $(".artist-cell:containsNoCase('text')".replace('text', text));
     var nomatch = $(".artist-cell:not(.artist-cell:containsNoCase('text'))".replace('text', text));
@@ -31,6 +33,7 @@ function filterAlbums(event) {
     var match = $(".genre-cell:containsNoCase('text')".replace('text', text));
     var nomatch = $(".genre-cell:not(.genre-cell:containsNoCase('text'))".replace('text', text));
   }
+  // Show/hide rows according to filter
   match.parents('tr').show();
   nomatch.parents('tr').hide();
 
