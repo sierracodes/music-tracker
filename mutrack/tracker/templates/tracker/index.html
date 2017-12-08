@@ -27,12 +27,16 @@
     <tbody>
       {% for album in album_list %}
       <tr>
-        <td><a class="block-anchor" href="https://google.com" target=_blank>{{ album.artist.name }}</a></td>
-        <td><a class="block-anchor" href="#">{{ album.name }}</a></td>
-        {# <td>{% with i=forloop.counter|stringformat:"s" %}{{ i }}{% endwith %}</td> #}
-        <td><a class="block-anchor" href="#">{{ album.year }}</a></td>
-        <td><a class="block-anchor" href="#">{{ album.rating }}</a></td>
-        <td><a class="block-anchor" href="#">{{ album.secondary_genres }}</a></td>
+        <td><a class="block-anchor" href="{% url 'tracker:album' album.quoted_artist_name album.quoted_album_name %}">
+          {{ album.artist.name }}</a></td>
+        <td><a class="block-anchor" href="{% url 'tracker:album' album.quoted_artist_name album.quoted_album_name %}">
+          {{ album.name }}</a></td>
+        <td><a class="block-anchor" href="{% url 'tracker:album' album.quoted_artist_name album.quoted_album_name %}">
+          {{ album.year }}</a></td>
+        <td><a class="block-anchor" href="{% url 'tracker:album' album.quoted_artist_name album.quoted_album_name %}">
+          {{ album.rating }}</a></td>
+        <td><a class="block-anchor" href="{% url 'tracker:album' album.quoted_artist_name album.quoted_album_name %}">
+          {{ album.secondary_genres }}</a></td>
       </tr>
       {% endfor %}
     </tbody>

@@ -4,6 +4,7 @@ models.py
 File contains data models for music tracker application.
 """
 import datetime
+from urllib.parse import quote_plus
 
 from django.db import models
 from django.core.exceptions import ValidationError
@@ -76,6 +77,12 @@ class Album(models.Model):
 
     def artist_name(self):
         return self.artist.name
+
+    def quoted_album_name(self):
+        return quote_plus(self.name)
+
+    def quoted_artist_name(self):
+        return quote_plus(self.artist.name)
 
     class Meta:
         unique_together = ('name', 'artist')
