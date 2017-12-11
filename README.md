@@ -20,4 +20,5 @@ this purpose.
 * Implement listen logging (including loading in listen data from my Excel
   spreadsheet)
 * Add ability to add/edit albums
-* Improve UI for searching
+* Improve search behavior for year, rating, genre (better than just string
+  matching)
