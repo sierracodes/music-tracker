@@ -8,3 +8,7 @@
   color: green;
   text-decoration: none;
 }
+
+#search-row .form-group {
+  margin: 0;
+}

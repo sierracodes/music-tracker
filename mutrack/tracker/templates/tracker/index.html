@@ -13,20 +13,20 @@
 
 <h2>All Albums</h2>
 
-<form class="form-inline">
-  <div class="form-group">
-    <select id="search-selector">
-      <option value="artist">Artist</option>
-      <option value="album">Album</option>
-      <option value="year">Year</option>
-      <option value="genres">Genres</option>
-    </select>
-  </div>
-  <div class="form-group mx-sm-3">
-      <label for="album-search" class="sr-only">Search</label>
-      <input type="search" class="form-control" id="album-search" placeholder="Search">
-  </div>
-</form>
+{# <form class="form-inline">#}
+  {# <div class="form-group">#}
+    {# <select id="search-selector">#}
+      {# <option value="artist">Artist</option>#}
+      {# <option value="album">Album</option>#}
+      {# <option value="year">Year</option>#}
+      {# <option value="genres">Genres</option>#}
+    {# </select>#}
+  {# </div>#}
+  {# <div class="form-group mx-sm-3">#}
+      {# <label for="album-search" class="sr-only">Search</label>#}
+      {# <input type="search" class="form-control" id="album-search" placeholder="Search">#}
+  {# </div>#}
+{# </form>#}
 
 
 <div class="table-responsive">
@@ -41,6 +41,38 @@
       </tr>
     </thead>
     <tbody>
+      <tr id="search-row">
+        <td>
+          <div class="form-group">
+              <label for="album-search" class="sr-only">Artist</label>
+              <input type="search" class="form-control" id="artist-search" placeholder="Artist">
+          </div>
+        </td>
+        <td>
+          <div class="form-group">
+              <label for="album-search" class="sr-only">Album</label>
+              <input type="search" class="form-control" id="album-search" placeholder="Album">
+          </div>
+        </td>
+        <td class="search-data-cell">
+          <div class="form-group">
+              <label for="album-search" class="sr-only">Year</label>
+              <input type="search" class="form-control" id="year-search" placeholder="Year">
+          </div>
+        </td>
+        <td>
+          <div class="form-group">
+              <label for="album-search" class="sr-only">Rating</label>
+              <input type="search" class="form-control" id="rating-search" placeholder="Rating">
+          </div>
+        </td>
+        <td>
+          <div class="form-group">
+              <label for="album-search" class="sr-only">Genres</label>
+              <input type="search" class="form-control" id="genre-search" placeholder="Genres">
+          </div>
+        </td>
+      </tr>
       {% for album in album_list %}
       <tr>
         <td><a class="block-anchor artist-cell" href="{% url 'tracker:album' album.artist.quoted_name album.quoted_name %}">
