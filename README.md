@@ -11,7 +11,7 @@ this purpose.
 #### Current Features
 * Tabular display of all albums on index page, including rudimentary
   search/filter functionality.
-* Detail pages (still quite sparse) for each album, including link to search
+* Detail pages (still somewhat sparse) for each album, including link to search
   for the album on YouTube
 * Detail pages (also sparse) for artists; currently just a list of all the
   albums in the database by that artist
