@@ -1,6 +1,6 @@
 {% extends "tracker/base-bootstrap.html" %}
 
-{% block title %}o hai{% endblock %}
+{% block title %}{{ album.artist.name }} &ndash; {{ album.name }}{% endblock %}
 {% block h1 %}<i>{{ album.name }}</i>{% endblock %}
 
 
@@ -9,6 +9,8 @@
 
   <li>Artist: {{ album.artist.name }}</li>
   <li>Year: {{ album.year }}</li>
+  <li>Rating: {{ album.rating }}</li>
+  <li>Comments: {{ album.comments }}</li>
   <li><a href={{ youtube_search_link }} target=_blank rel="noopener noreferrer">
     Search on YouTube</a></li>
 
