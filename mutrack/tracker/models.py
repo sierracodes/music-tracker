@@ -94,3 +94,9 @@ class Listen(models.Model):
     """
     album = models.ForeignKey(Album, on_delete=models.CASCADE)
     listen_date = models.DateField(default=datetime.date.today, null=True)
+
+    def __str__(self):
+        return '{} ({})'.format(self.album, self.listen_date)
+
+    class Meta:
+        ordering = ('-listen_date',)
