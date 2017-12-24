@@ -93,4 +93,4 @@ class Listen(models.Model):
     """A model representing an instance of listening to an album.
     """
     album = models.ForeignKey(Album, on_delete=models.CASCADE)
-    listen_date = models.DateField(default=datetime.date.today)
+    listen_date = models.DateField(default=datetime.date.today, null=True)
