@@ -22,3 +22,5 @@ this purpose.
 * Add ability to add/edit albums
 * Improve search behavior for year, rating, genre (better than just string
   matching)
+* Fix so that filters apply when you use browser to go back, i.e. run jQuery
+filters manually once before attaching to key up in inputs
