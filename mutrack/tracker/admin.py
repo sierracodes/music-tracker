@@ -5,7 +5,7 @@ from tracker.models import Artist, Album, PrimaryGenre, Listen
 # Register your models here.
 admin.site.register(Artist)
 admin.site.register(PrimaryGenre)
-admin.site.register(Listen)
+# admin.site.register(Listen)
 
 class AlbumAdmin(admin.ModelAdmin):
     list_display = ['name', 'artist_name', 'year', 'rating']
@@ -13,3 +13,9 @@ class AlbumAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Album, AlbumAdmin)
+
+
+class ListenAdmin(admin.ModelAdmin):
+    list_display = ['listen_date', 'artist_name', 'album_name']
+
+admin.site.register(Listen, ListenAdmin)

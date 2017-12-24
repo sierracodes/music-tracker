@@ -98,5 +98,11 @@ class Listen(models.Model):
     def __str__(self):
         return '{} ({})'.format(self.album, self.listen_date)
 
+    def artist_name(self):
+        return self.album.artist_name()
+
+    def album_name(self):
+        return self.album.name
+
     class Meta:
         ordering = ('-listen_date',)
