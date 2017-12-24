@@ -9,5 +9,7 @@ admin.site.register(Listen)
 
 class AlbumAdmin(admin.ModelAdmin):
     list_display = ['name', 'artist_name', 'year', 'rating']
+    search_fields = ['name', 'artist__name']
+
 
 admin.site.register(Album, AlbumAdmin)
