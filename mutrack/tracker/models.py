@@ -85,13 +85,20 @@ class Album(models.Model):
         return quote_plus(self.name)
 
     def all_listens(self):
+        """Return all listens for this album."""
         return self.listen_set.filter(album=self)
 
     def last_five_listens(self):
+        """Return five most recent listens for this album."""
         return self.all_listens()[:5]
 
     def last_listen(self):
+        """Return most recent listen for this album."""
         return self.all_listens()[0]
+
+    def number_of_plays(self):
+        """Return number of listens for this album."""
+        return len(self.all_listens())
 
     class Meta:
         unique_together = ('name', 'artist')
