@@ -14,6 +14,7 @@ $("#album-search").keyup(filterAlbum);
 $("#year-search").keyup(filterYear);
 $("#rating-search").keyup(filterRating);
 $("#genre-search").keyup(filterGenre);
+$("#play-search").keyup(filterPlays);
 
 function filterArtist(event) {
   var text = event.target.value;
@@ -47,6 +48,13 @@ function filterGenre(event) {
   var text = event.target.value;
   var match = $(".genre-cell:containsNoCase('text')".replace('text', text));
   var nomatch = $(".genre-cell:not(.genre-cell:containsNoCase('text'))".replace('text', text));
+  match.parents('tr').show();
+  nomatch.parents('tr').hide();
+}
+function filterPlays(event) {
+  var text = event.target.value;
+  var match = $(".plays-cell:containsNoCase('text')".replace('text', text));
+  var nomatch = $(".plays-cell:not(.plays-cell:containsNoCase('text'))".replace('text', text));
   match.parents('tr').show();
   nomatch.parents('tr').hide();
 }
