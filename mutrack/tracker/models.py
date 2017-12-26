@@ -84,6 +84,15 @@ class Album(models.Model):
     def quoted_name(self):
         return quote_plus(self.name)
 
+    def all_listens(self):
+        return self.listen_set.filter(album=self)
+
+    def last_five_listens(self):
+        return self.all_listens()[:5]
+
+    def last_listen(self):
+        return self.all_listens()[0]
+
     class Meta:
         unique_together = ('name', 'artist')
         ordering = ('-rating', 'artist', 'name')
@@ -103,6 +112,28 @@ class Listen(models.Model):
 
     def album_name(self):
         return self.album.name
+
+    def slash_date(self):
+        """Return listen date in YYYY/MM/DD format.
+
+        If no date, 'Unknown date' is returned.
+        """
+        if self.listen_date is not None:
+            return '{:04d}/{:02d}/{:02d}'.format(self.listen_date.year,
+                                                 self.listen_date.month,
+                                                 self.listen_date.day)
+        else:
+            return 'Unknown date'
+
+    def default_date(self):
+        """Return listen date in default datetime.date format.
+
+        If no date, 'Unknown date' is returned.
+        """
+        if self.listen_date is not None:
+            return self.listen_date
+        else:
+            return 'Unknown date'
 
     class Meta:
         ordering = ('-listen_date',)
