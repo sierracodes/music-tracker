@@ -146,28 +146,36 @@ function markRowsForFilterNumeric(cellClass, text, date=false) {
     }
   } else {
 
-    // If there is no operator, just do text matching
-    if (!(hasOperator(text))) {
-      markRowsForFilter(cellClass, text);
-    } else {
-      // Mark cells that fail the test function
-      var cells = $('.CELLCLASS'.replace('CELLCLASS', cellClass));
-      for (let i = 0; i < cells.length; i++) {
-        let cell = cells[i];
+    let allCells = $('.'.concat(cellClass));
 
-        if (date) {
-          let d = new Date(cell.text.trim());
-          var testValue = d.getTime();
-        } else {
-          var testValue = Number(cell.text.trim());
+    let textList = text.split('|');
+    let testFunctions = [];
+
+    // Construct the testFn as a chain of or's
+    for (let i = 0; i < textList.length; i++) {
+      testFunctions.push(getComparisonFunction(textList[i].trim(), date=date));
+    }
+
+    // Get the test function for determining whether a cell's contents meet
+    // the filter criteria
+    // let testFn = getComparisonFunction(text, date=date);
+    let testAllCriteria = function(text) {
+      for (let i = 0; i < testFunctions.length; i++) {
+        let testFn = testFunctions[i];
+        if (testFn(text)) {
+          return true;
         }
+      }
+      return false;
+    }
 
-        let testFn = getComparisonFunction(text, date=date);
+    // Mark cells that fail the test function
+    for (let i = 0; i < allCells.length; i++) {
+      let cell = allCells[i];
 
-        if ( !(testFn(testValue)) ) {
-          let parentRow = $(cell).parents('tr');
-          parentRow.attr('filtered-out', 'true')
-        }
+      if ( !(testAllCriteria(cell.text.trim())) ) {
+        let parentRow = $(cell).parents('tr');
+        parentRow.attr('filtered-out', 'true')
       }
     }
   }
@@ -213,43 +221,51 @@ function hasOperator(text) {
  * @returns {function} testFn
  */
 function getComparisonFunction(text, date=false) {
-  // Define function for casting text to number
-  if (date) {
-    var numCast = function(txt) {
-      let d = new Date(txt);
-      return d.getTime();
-    }
-  } else {
-    var numCast = function(txt) {
-      return Number(txt);
-    }
-  }
 
   // Define the test function for filtering the cell
-  if (text.startsWith('<=')) {
-    var compareText = text.slice(2);
-    var testFn = val => val <= numCast(compareText);
+  // If no operator is present in the text, just do case-insensitive string
+  // matching
+  let stringMatch = (!(hasOperator(text)));
+  if (stringMatch) {
+    var testFn = cellStr => cellStr.toUpperCase().includes(text.toUpperCase());
+  } else {
+    // Define function for casting text to number
+    if (date) {
+      var numCast = function(txt) {
+        let d = new Date(txt);
+        return d.getTime();
+      }
+    } else {
+      var numCast = function(txt) {
+        return Number(txt);
+      }
+    }
 
-  } else if (text.startsWith('>=')) {
-    var compareText = text.slice(2);
-    var testFn = val => val >= numCast(compareText);
+    if (text.startsWith('<=')) {
+      var compareText = text.slice(2);
+      var testFn = cellStr => numCast(cellStr) <= numCast(compareText);
 
-  } else if (text.startsWith('<')) {
-    var compareText = text.slice(1);
-    var testFn = val => val < numCast(compareText);
+    } else if (text.startsWith('>=')) {
+      var compareText = text.slice(2);
+      var testFn = cellStr => numCast(cellStr) >= numCast(compareText);
 
-  } else if (text.startsWith('>')) {
-    var compareText = text.slice(1);
-    var testFn = val => val > numCast(compareText);
+    } else if (text.startsWith('<')) {
+      var compareText = text.slice(1);
+      var testFn = cellStr => numCast(cellStr) < numCast(compareText);
 
-  } else if (text.startsWith('=')) {
-    var compareText = text.slice(1);
-    var testFn = val => val == numCast(compareText);
-  }
+    } else if (text.startsWith('>')) {
+      var compareText = text.slice(1);
+      var testFn = cellStr => numCast(cellStr) > numCast(compareText);
 
-  // If text is empty after the operator, redefine testFn to always return true
-  if (!(compareText)) {
-    testFn = val => true;
+    } else if (text.startsWith('=')) {
+      var compareText = text.slice(1);
+      var testFn = cellStr => numCast(cellStr) === numCast(compareText);
+    }
+
+    // If text is empty after the operator, redefine testFn to always return true
+    if (!(compareText)) {
+      testFn = val => true;
+    }
   }
 
   return testFn;
