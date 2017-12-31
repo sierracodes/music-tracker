@@ -69,6 +69,13 @@ function filterRows() {
  * string matching on their contents. If the desired text is not found, parent
  * 'tr' elements are given the attribute 'filtered-out' with the value 'true'.
  *
+ * Multiple strings to match may be included using commas for 'and' operator or
+ * pipes for 'or' behavior.
+ *
+ * E.g.:
+ * - 'metal | rock' - matches any cell with 'metal' or 'rock' in it
+ * - 'indie, post rock' - matches any cell with 'indie' and 'post rock' in it
+ *
  * @param {string} cellClass - CSS class to search
  * @param {string} text - text to search for in cells (not case sensitive)
  */
@@ -120,13 +127,19 @@ function markRowsForFilter(cellClass, text) {
  * Function looks for all HTML elements with the specified CSS class, and
  * filters based on the input text. If the input text starts with an operator
  * (<, >, <=, >=, or =), the appropriate comparison is done for the content of
- * each element. If no operator is present, defaults to string matching (via
- * markRowsForFilter). Multple filter conditions may be present in text,
- * separated by commas.
+ * each element. If no operator is present, defaults to case-insensitive string
+ * matching.
  *
- * If the condition is not met (or desired text is not found for string
- * matching), parent 'tr' elements are given the attribute 'filtered-out' with
- * the value 'true'.
+ * Multiple conditions may be imposed using commas for 'and' operator or using
+ * pipes for 'or' behavior.
+ * E.g.:
+ *  - '>2016 | <2011' matches strings with numbers greater than 2016 or less
+ *    than 2011
+ * - '>=2000, <2005' matches strings with numbers between 2000 and 2004
+ *   inclusive
+ *
+ * If the overall search condition is not met, parent 'tr' elements are given
+ * the attribute 'filtered-out' with the value 'true'.
  *
  * @param {type} cellClass - CSS class to match to elements
  * @param {type} text - text for filtering based on numerical comparison or
@@ -209,16 +222,24 @@ function hasOperator(text) {
 }
 
 /**
- * getComparisonFunction - Get a comparison test fonction based on a particular
+ * getComparisonFunction - Get a comparison test function based on a particular
  * text input.
  *
- * E.g.: text = "> 3" --> returns a function which takes one numeric argument,
- * returning true if the value is greater than 3 and false otherwise. Assumes
- * text input does contain an operator; if no operator is found, behavior is
- * undefined. Operators inclue: <, >, <=, >=, =.
+ * E.g.: text = "> 3" --> returns a function which takes one string argument,
+ * returning true if the value is greater than 3 and false otherwise.
+ *
+ * If text starts with an operator, assumes input to the resulting function is
+ * to be cast to a number. Input is treated as a date and cast to number using
+ * Date.getTime if date=true (otherwise uses Number). If no operator is
+ * present, resulting test function just does case-insensitive string matching.
+ * Resulting test function always takes a string as an input. Operators
+ * include: <, >, <=, >=, =.
  *
  * @param {string} text - the text to create the comparison function from
- * @returns {function} testFn
+ * @param {boolean} date=false - if true and operator is found, treat input to
+ *   returned test function as date string
+ * @returns {function} - resulting test function which takes one string as an
+ *   argument and returns a boolean
  */
 function getComparisonFunction(text, date=false) {
 
@@ -262,7 +283,8 @@ function getComparisonFunction(text, date=false) {
       var testFn = cellStr => numCast(cellStr) === numCast(compareText);
     }
 
-    // If text is empty after the operator, redefine testFn to always return true
+    // If text is empty after the operator, redefine testFn to always return
+    // true
     if (!(compareText)) {
       testFn = val => true;
     }
