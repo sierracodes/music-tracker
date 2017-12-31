@@ -34,13 +34,16 @@ function filterRows() {
     row.setAttribute('filtered-out', 'false');
   }
 
-  // Mark rows as filtered out according to the search inputs
+  //---- Mark rows as filtered out according to the search inputs
+  // Regular 'contains' filters for text cells
   markRowsForFilter('artist-cell', $('#artist-search').val());
   markRowsForFilter('album-cell', $('#album-search').val());
-  markRowsForFilter('year-cell', $('#year-search').val());
-  markRowsForFilter('rating-cell', $('#rating-search').val());
   markRowsForFilter('genre-cell', $('#genre-search').val());
-  markRowsForFilter('plays-cell', $('#plays-search').val());
+
+  // Numeric fileters for year, rating, and plays
+  markRowsForFilterNumeric('year-cell', $('#year-search').val());
+  markRowsForFilterNumeric('rating-cell', $('#rating-search').val());
+  markRowsForFilterNumeric('plays-cell', $('#plays-search').val());
 
   // Hide and show rows appropriately
   $('tr[filtered-out="false"]').show();
@@ -60,8 +63,67 @@ function markRowsForFilter(cellClass, text) {
 
   // Mark the rows using the 'filtered-out' attribute
   var rowsToMark = nomatch.parents('tr');
-  for (i = 0; i< rowsToMark.length; i++) {
-    let row = rowsToMark[i];
-    row.setAttribute('filtered-out', 'true');
+  rowsToMark.attr('filtered-out', 'true');
+}
+
+// Specialized function for filtering based on numeric values, which can use
+// comparison operators (<, >, <=, >=, and =)
+function markRowsForFilterNumeric(cellClass, text) {
+  text = text.trim();
+
+  // Define the test function for filtering the cell
+  if (text.startsWith('<=')) {
+    var compareVal = Number(text.slice(2));
+    if (compareVal) {
+      var testFn = val => val <= compareVal;
+    } else {
+      var testFn = val => true;
+    }
+
+  } else if (text.startsWith('>=')) {
+    var compareVal = Number(text.slice(2));
+    if (compareVal) {
+      var testFn = val => val >= compareVal;
+    } else {
+      var testFn = val => true;
+    }
+
+  } else if (text.startsWith('<')) {
+    var compareVal = Number(text.slice(1));
+    if (compareVal) {
+      var testFn = val => val < compareVal;
+    } else {
+      var testFn = val => true;
+    }
+
+  } else if (text.startsWith('>')) {
+    var compareVal = Number(text.slice(1));
+    if (compareVal) {
+      var testFn = val => val > compareVal;
+    } else {
+      var testFn = val => true;
+    }
+
+  } else if (text.startsWith('=')) {
+    var compareVal = Number(text.slice(1));
+    if (compareVal) {
+      var testFn = val => val == compareVal;
+    } else {
+      var testFn = val => true;
+    }
+
+  } else {
+    var compareVal = -1;
+    var testFn = val => val.toUpperCase().includes(text.toUpperCase());
+  }
+
+  // Mark cells that fail the test function
+  var cells = $('.CELLCLASS'.replace('CELLCLASS', cellClass));
+  for (let i = 0; i < cells.length; i++) {
+    let cell = cells[i];
+    if ( !(testFn(cell.text.trim())) ) {
+      let parentRow = $(cell).parents('tr');
+      parentRow.attr('filtered-out', 'true')
+    }
   }
 }
