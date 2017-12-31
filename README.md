@@ -17,8 +17,5 @@ this purpose.
   albums in the database by that artist
 
 #### To do
-* Implement listen logging (including loading in listen data from my Excel
-  spreadsheet)
+* Implement listen logging
 * Add ability to add/edit albums
-* Improve search behavior for year, rating, genre (better than just string
-  matching)
