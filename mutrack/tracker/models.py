@@ -94,7 +94,33 @@ class Album(models.Model):
 
     def last_listen(self):
         """Return most recent listen for this album."""
-        return self.all_listens()[0]
+        all_listens = self.all_listens()
+        if all_listens:
+            return all_listens[0]
+        else:
+            return None
+
+    def last_listen_date_ymd(self):
+        """Return date of most recent listen as a string in YYYY/MM/DD format.
+
+        If no last listen, will return 'No listens'
+        """
+        last_listen = self.last_listen()
+        if last_listen:
+            return last_listen.slash_date_ymd()
+        else:
+            return 'No listens'
+
+    def last_listen_date_mdy(self):
+        """Return date of most recent listen as a string in MM/DD/YY format.
+
+        If no last listen, will return 'No listens'
+        """
+        last_listen = self.last_listen()
+        if last_listen:
+            return last_listen.slash_date_mdy()
+        else:
+            return 'No listens'
 
     def number_of_plays(self):
         """Return number of listens for this album."""
@@ -120,7 +146,7 @@ class Listen(models.Model):
     def album_name(self):
         return self.album.name
 
-    def slash_date(self):
+    def slash_date_ymd(self):
         """Return listen date in YYYY/MM/DD format.
 
         If no date, 'Unknown date' is returned.
@@ -129,6 +155,18 @@ class Listen(models.Model):
             return '{:04d}/{:02d}/{:02d}'.format(self.listen_date.year,
                                                  self.listen_date.month,
                                                  self.listen_date.day)
+        else:
+            return 'Unknown date'
+
+    def slash_date_mdy(self):
+        """Return listen date in MM/DD/YY format.
+
+        If no date, 'Unknown date' is returned.
+        """
+        if self.listen_date is not None:
+            return '{:d}/{:d}/{:02d}'.format(self.listen_date.month,
+                                             self.listen_date.day,
+                                             self.listen_date.year%100)
         else:
             return 'Unknown date'
 

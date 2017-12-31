@@ -39,6 +39,7 @@
         <th>Rating</th>
         <th>Genres</th>
         <th>Plays</th>
+        <th>Last Listen</th>
       </tr>
     </thead>
     <tbody>
@@ -79,6 +80,12 @@
               <input type="search" class="form-control" id="plays-search" placeholder="Plays">
           </div>
         </td>
+        <td>
+          <div class="form-group">
+              <label for="album-search" class="sr-only">Last Listen</label>
+              <input type="search" class="form-control" id="last-listen-search" placeholder="Last Listen">
+          </div>
+        </td>
       </tr>
       {% for album in album_list %}
       <tr class="album-data-row">
@@ -94,6 +101,8 @@
           {{ album.secondary_genres }}</a></td>
         <td><a class="block-anchor plays-cell" href="{% url 'tracker:album' album.artist.quoted_name album.quoted_name %}">
           {{ album.number_of_plays }}</a></td>
+        <td><a class="block-anchor last-listen-cell" href="{% url 'tracker:album' album.artist.quoted_name album.quoted_name %}">
+          {{ album.last_listen_date_mdy }}</a></td>
       </tr>
       {% endfor %}
     </tbody>
