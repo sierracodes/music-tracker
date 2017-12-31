@@ -73,41 +73,41 @@ function markRowsForFilterNumeric(cellClass, text) {
 
   // Define the test function for filtering the cell
   if (text.startsWith('<=')) {
-    var compareVal = Number(text.slice(2));
-    if (compareVal) {
-      var testFn = val => val <= compareVal;
+    var compareText = text.slice(2);
+    if (compareText) {
+      var testFn = val => val <= Number(compareText);
     } else {
       var testFn = val => true;
     }
 
   } else if (text.startsWith('>=')) {
-    var compareVal = Number(text.slice(2));
-    if (compareVal) {
-      var testFn = val => val >= compareVal;
+    var compareText = text.slice(2);
+    if (compareText) {
+      var testFn = val => val >= Number(compareText);
     } else {
       var testFn = val => true;
     }
 
   } else if (text.startsWith('<')) {
-    var compareVal = Number(text.slice(1));
-    if (compareVal) {
-      var testFn = val => val < compareVal;
+    var compareText = text.slice(1);
+    if (compareText) {
+      var testFn = val => val < Number(compareText);
     } else {
       var testFn = val => true;
     }
 
   } else if (text.startsWith('>')) {
-    var compareVal = Number(text.slice(1));
-    if (compareVal) {
-      var testFn = val => val > compareVal;
+    var compareText = text.slice(1);
+    if (compareText) {
+      var testFn = val => val > Number(compareText);
     } else {
       var testFn = val => true;
     }
 
   } else if (text.startsWith('=')) {
-    var compareVal = Number(text.slice(1));
-    if (compareVal) {
-      var testFn = val => val == compareVal;
+    var compareText = text.slice(1);
+    if (compareText) {
+      var testFn = val => val == Number(compareText);
     } else {
       var testFn = val => true;
     }
