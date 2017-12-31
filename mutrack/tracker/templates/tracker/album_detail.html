@@ -21,6 +21,7 @@
     <a href="{% url 'tracker:artist' album.artist.quoted_name %}">
       All albums by this artist</a>
   </div>
+
   <div class="col-5">
     Last 5 listens:
     <ul>
@@ -28,6 +29,7 @@
       <li>{{ listen.default_date }}</li>
       {% endfor %}
     </ul>
+    Total number of plays: {{ album.number_of_plays }}
   </div>
 
 </div class="row">
