@@ -9,16 +9,24 @@ jQuery.expr[':'].containsNoCase = function(a, i, m) {
 };
 
 // Attach event handlers for search inputs
-$('#artist-search').keyup(filterRows);
-$('#album-search').keyup(filterRows);
-$('#year-search').keyup(filterRows);
-$('#rating-search').keyup(filterRows);
-$('#genre-search').keyup(filterRows);
-$('#plays-search').keyup(filterRows);
+$('#artist-search').keyup(filterRowsEvent);
+$('#album-search').keyup(filterRowsEvent);
+$('#year-search').keyup(filterRowsEvent);
+$('#rating-search').keyup(filterRowsEvent);
+$('#genre-search').keyup(filterRowsEvent);
+$('#plays-search').keyup(filterRowsEvent);
+
+// Run once when document is ready in case of back button
+$(document).ready(filterRows);
+
+// Row filter in form of event handler; event object not necessary for the
+// filtering
+function filterRowsEvent(event) {
+  filterRows();
+}
 
 // Filter rows based on search inputs
-function filterRows(event) {
-
+function filterRows() {
   // Start by marking all rows as not filtered out
   var allRows = $('.album-data-row');
   for (i = 0; i < allRows.length; i++) {
