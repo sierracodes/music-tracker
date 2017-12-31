@@ -73,17 +73,26 @@ function filterRows() {
  * @param {string} text - text to search for in cells (not case sensitive)
  */
 function markRowsForFilter(cellClass, text) {
+  text = text.trim();
 
-  // Find cells with given class that don't contain the text
-  let selector = ".CELLCLASS:not(.CELLCLASS:containsNoCase('TEXT'))"
-  selector = selector.replace('CELLCLASS', cellClass);
-  selector = selector.replace('CELLCLASS', cellClass);
-  selector = selector.replace('TEXT', text);
-  var nomatch = $(selector);
+  if (text.includes(',')) {
+    let textSplits = text.split(',');
+    for (let i = 0; i < textSplits.length; i++) {
+      markRowsForFilter(cellClass, textSplits[i]);
+    }
+  } else {
 
-  // Mark the rows using the 'filtered-out' attribute
-  var rowsToMark = nomatch.parents('tr');
-  rowsToMark.attr('filtered-out', 'true');
+    // Find cells with given class that don't contain the text
+    let selector = ".CELLCLASS:not(.CELLCLASS:containsNoCase('TEXT'))"
+    selector = selector.replace('CELLCLASS', cellClass);
+    selector = selector.replace('CELLCLASS', cellClass);
+    selector = selector.replace('TEXT', text);
+    var nomatch = $(selector);
+
+    // Mark the rows using the 'filtered-out' attribute
+    var rowsToMark = nomatch.parents('tr');
+    rowsToMark.attr('filtered-out', 'true');
+  }
 }
 
 /**
@@ -94,7 +103,8 @@ function markRowsForFilter(cellClass, text) {
  * filters based on the input text. If the input text starts with an operator
  * (<, >, <=, >=, or =), the appropriate comparison is done for the content of
  * each element. If no operator is present, defaults to string matching (via
- * markRowsForFilter).
+ * markRowsForFilter). Multple filter conditions may be present in text,
+ * separated by commas.
  *
  * If the condition is not met (or desired text is not found for string
  * matching), parent 'tr' elements are given the attribute 'filtered-out' with
@@ -110,27 +120,36 @@ function markRowsForFilter(cellClass, text) {
 function markRowsForFilterNumeric(cellClass, text, date=false) {
   text = text.trim();
 
-  // If there is no operator, just do text matching
-  if (!(hasOperator(text))) {
-    markRowsForFilter(cellClass, text);
+  // Split multiple selections by comma, and recursively call function for each
+  if (text.includes(',')) {
+    let textSplits = text.split(',');
+    for (let i = 0; i < textSplits.length; i++) {
+      markRowsForFilterNumeric(cellClass, textSplits[i], date=date);
+    }
   } else {
-    // Mark cells that fail the test function
-    var cells = $('.CELLCLASS'.replace('CELLCLASS', cellClass));
-    for (let i = 0; i < cells.length; i++) {
-      let cell = cells[i];
 
-      if (date) {
-        let d = new Date(cell.text.trim());
-        var testValue = d.getTime();
-      } else {
-        var testValue = Number(cell.text.trim());
-      }
+    // If there is no operator, just do text matching
+    if (!(hasOperator(text))) {
+      markRowsForFilter(cellClass, text);
+    } else {
+      // Mark cells that fail the test function
+      var cells = $('.CELLCLASS'.replace('CELLCLASS', cellClass));
+      for (let i = 0; i < cells.length; i++) {
+        let cell = cells[i];
 
-      let testFn = getComparisonFunction(text, date=date);
+        if (date) {
+          let d = new Date(cell.text.trim());
+          var testValue = d.getTime();
+        } else {
+          var testValue = Number(cell.text.trim());
+        }
 
-      if ( !(testFn(testValue)) ) {
-        let parentRow = $(cell).parents('tr');
-        parentRow.attr('filtered-out', 'true')
+        let testFn = getComparisonFunction(text, date=date);
+
+        if ( !(testFn(testValue)) ) {
+          let parentRow = $(cell).parents('tr');
+          parentRow.attr('filtered-out', 'true')
+        }
       }
     }
   }
