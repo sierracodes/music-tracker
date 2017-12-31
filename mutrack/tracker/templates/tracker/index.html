@@ -76,19 +76,19 @@
         <td>
           <div class="form-group">
               <label for="album-search" class="sr-only">Plays</label>
-              <input type="search" class="form-control" id="play-search" placeholder="Plays">
+              <input type="search" class="form-control" id="plays-search" placeholder="Plays">
           </div>
         </td>
       </tr>
       {% for album in album_list %}
-      <tr>
+      <tr class="album-data-row">
         <td><a class="block-anchor artist-cell" href="{% url 'tracker:album' album.artist.quoted_name album.quoted_name %}">
           {{ album.artist.name }}</a></td>
         <td><a class="block-anchor album-cell" href="{% url 'tracker:album' album.artist.quoted_name album.quoted_name %}">
           {{ album.name }}</a></td>
         <td><a class="block-anchor year-cell" href="{% url 'tracker:album' album.artist.quoted_name album.quoted_name %}">
           {{ album.year }}</a></td>
-        <td><a class="block-anchor" href="{% url 'tracker:album' album.artist.quoted_name album.quoted_name %}">
+        <td><a class="block-anchor rating-cell" href="{% url 'tracker:album' album.artist.quoted_name album.quoted_name %}">
           {{ album.rating }}</a></td>
         <td><a class="block-anchor genre-cell" href="{% url 'tracker:album' album.artist.quoted_name album.quoted_name %}">
           {{ album.secondary_genres }}</a></td>
