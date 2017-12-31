@@ -82,15 +82,33 @@ function markRowsForFilter(cellClass, text) {
     }
   } else {
 
-    // Find cells with given class that don't contain the text
-    let selector = ".CELLCLASS:not(.CELLCLASS:containsNoCase('TEXT'))"
-    selector = selector.replace('CELLCLASS', cellClass);
-    selector = selector.replace('CELLCLASS', cellClass);
-    selector = selector.replace('TEXT', text);
-    var nomatch = $(selector);
+    // Check for | for 'or'
+    if (text.includes('|')) {
+      let textSplits = text.split('|');
+      var selector = '.CLS:not(';
+
+      // Construct selector
+      for (let i = 0; i < textSplits.length; i++) {
+        let subText = textSplits[i].trim();
+        selector = selector.concat(
+          ".CLS:containsNoCase('TEXT')".replace('TEXT', subText));
+        if (i != textSplits.length-1) {
+          selector = selector.concat(', ');
+        }
+      }
+      selector = selector.concat(')')
+
+    } else {
+      // Find cells with given class that don't contain the text
+      var selector =
+        ".CLS:not(.CLS:containsNoCase('TEXT'))".replace('TEXT', text);
+    }
+
+    selector = stringReplaceAll(selector, 'CLS', cellClass);
 
     // Mark the rows using the 'filtered-out' attribute
-    var rowsToMark = nomatch.parents('tr');
+    let nomatch = $(selector);
+    let rowsToMark = nomatch.parents('tr');
     rowsToMark.attr('filtered-out', 'true');
   }
 }
@@ -153,6 +171,22 @@ function markRowsForFilterNumeric(cellClass, text, date=false) {
       }
     }
   }
+}
+
+
+/**
+ * stringReplaceAll - Replace all instances of a substring in a string
+ *
+ * @param {string} text - text to do replacing on
+ * @param {string} toReplace - substring to replace
+ * @param {string} replaceWith - substring to put in place of toReplace
+ * @return {string} - resulting string
+ */
+function stringReplaceAll(text, toReplace, replaceWith) {
+  while (text.includes(toReplace)) {
+    text = text.replace(toReplace, replaceWith);
+  }
+  return text;
 }
 
 /**
