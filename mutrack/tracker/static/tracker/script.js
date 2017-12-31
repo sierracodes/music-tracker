@@ -2,12 +2,6 @@
 Javascript file for tracker application.
 */
 
-// Case-insensitive contains selector
-jQuery.expr[':'].containsNoCase = function(a, i, m) {
-  return jQuery(a).text().toUpperCase()
-      .indexOf(m[3].toUpperCase()) >= 0;
-};
-
 // Attach event handlers for search inputs
 $('#artist-search').keyup(filterRowsEvent);
 $('#album-search').keyup(filterRowsEvent);
@@ -20,13 +14,25 @@ $('#last-listen-search').keyup(filterRowsEvent);
 // Run once when document is ready in case of back button
 $(document).ready(filterRows);
 
-// Row filter in form of event handler; event object not necessary for the
-// filtering
+/** Case-insensitive contains selector */
+jQuery.expr[':'].containsNoCase = function(a, i, m) {
+  return jQuery(a).text().toUpperCase()
+      .indexOf(m[3].toUpperCase()) >= 0;
+};
+
+//-------------------------- Function definitions ---------------------------//
+
+/**
+ * filterRowsEvent - Wrapper for filterRows in the form of an event handler.
+ * Event object not necessary for the filtering.
+ */
 function filterRowsEvent(event) {
   filterRows();
 }
 
-// Filter rows based on search inputs
+/**
+ * filterRows - Filter table rows on index page based on search inputs
+ */
 function filterRows() {
   // Start by marking all rows as not filtered out
   var allRows = $('.album-data-row');
@@ -47,13 +53,13 @@ function filterRows() {
   markRowsForFilterNumeric('plays-cell', $('#plays-search').val());
 
   // Numeric date filter for last listen
-  markRowsForFilterNumeric('last-listen-cell', $('#last-listen-search').val(), date=true);
+  markRowsForFilterNumeric(
+    'last-listen-cell', $('#last-listen-search').val(), date=true);
 
   // Hide and show rows appropriately
   $('tr[filtered-out="false"]').show();
   $('tr[filtered-out="true"]').hide();
 }
-
 
 /**
  * markRowsForFilter - Mark table rows for filtering based on string matching
@@ -79,7 +85,6 @@ function markRowsForFilter(cellClass, text) {
   var rowsToMark = nomatch.parents('tr');
   rowsToMark.attr('filtered-out', 'true');
 }
-
 
 /**
  * markRowsForFilterNumeric - Mark table rows for filtering based on numeric
@@ -131,7 +136,6 @@ function markRowsForFilterNumeric(cellClass, text, date=false) {
   }
 }
 
-
 /**
  * hasOperator - Determine whether a search string starts with an operator
  *
@@ -139,9 +143,9 @@ function markRowsForFilterNumeric(cellClass, text, date=false) {
  * @return {boolean} true if text starts with operator, false otherwise
  */
 function hasOperator(text) {
-  return (text.startsWith('<') || text.startsWith('>') || text.startsWith('='));
+  return (
+    text.startsWith('<') || text.startsWith('>') || text.startsWith('='));
 }
-
 
 /**
  * getComparisonFunction - Get a comparison test fonction based on a particular
@@ -196,9 +200,4 @@ function getComparisonFunction(text, date=false) {
   }
 
   return testFn;
-}
-
-
-function splitOperator(text) {
-
 }
