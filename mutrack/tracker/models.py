@@ -76,7 +76,7 @@ class Album(models.Model):
     listen_link = models.URLField(blank=True, default='')
 
     def __str__(self):
-        return self.name
+        return '{} [{}]'.format(self.name, self.artist.name)
 
     def artist_name(self):
         return self.artist.name
