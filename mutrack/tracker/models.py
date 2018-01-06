@@ -24,7 +24,14 @@ def validate_zero_to_five(value):
         raise ValidationError(_('Value not between 0 and 5.'))
 
 class PrimaryGenreManager(models.Manager):
+    """Manager for PrimaryGenre model.
+    """
     def get_by_natural_key(self, name):
+        """Method to allow identification of a PrimaryGenre by name.
+
+        Otherwise would use primary key, which isn't particularly meaningful.
+        Helpful for serialization/fixtures.
+        """
         return self.get(name=name)
 
 
@@ -42,7 +49,14 @@ class PrimaryGenre(models.Model):
 
 
 class ArtistManager(models.Manager):
+    """Manager for Artist model.
+    """
     def get_by_natural_key(self, name):
+        """Method to allow identification of an Artist by name.
+
+        Otherwise would use primary key, which isn't particularly meaningful.
+        Helpful for serialization/fixtures.
+        """
         return self.get(name=name)
 
 
@@ -57,6 +71,7 @@ class Artist(models.Model):
         return self.name
 
     def quoted_name(self):
+        """Get 'quoted' name using pluses as spaces for use in URLs."""
         return quote_plus(self.name)
 
     class Meta:
@@ -64,7 +79,7 @@ class Artist(models.Model):
 
 
 class Album(models.Model):
-    """A model representing an album.
+    """Model representing an album.
     """
     name = models.CharField(max_length=120)
     year = models.IntegerField()
@@ -82,6 +97,7 @@ class Album(models.Model):
         return self.artist.name
 
     def quoted_name(self):
+        """Get 'quoted' name using pluses as spaces for use in URLs."""
         return quote_plus(self.name)
 
     def all_listens(self):
