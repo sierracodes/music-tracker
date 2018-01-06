@@ -76,3 +76,9 @@ class ArtistView(generic.DetailView):
             artist__name__iexact=unquote_plus(self.kwargs['artist_name']))
 
         return context
+
+class ArtistCreate(generic.edit.CreateView):
+    """View for creating a new Artist.
+    """
+    model = Artist
+    fields = ['name']

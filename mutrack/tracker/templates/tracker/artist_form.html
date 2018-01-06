@@ -1,0 +1,13 @@
+
+{% extends "tracker/base-bootstrap.html" %}
+
+{% block title %}Add Artist{% endblock %}
+{% block h1 %}Add Artist{% endblock %}
+
+{% block body-content %}
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" value="Submit" />
+</form>
+{% endblock %}

@@ -8,6 +8,7 @@ from urllib.parse import quote_plus
 
 from django.db import models
 from django.core.exceptions import ValidationError
+from django.urls import reverse_lazy
 
 # For translation--lazy means it's only translated when it's needed
 from django.utils.translation import ugettext_lazy as _
@@ -73,6 +74,10 @@ class Artist(models.Model):
     def quoted_name(self):
         """Get 'quoted' name using pluses as spaces for use in URLs."""
         return quote_plus(self.name)
+
+    def get_absolute_url(self):
+        return reverse_lazy('tracker:artist',
+                            kwargs={'artist_name': self.quoted_name()})
 
     class Meta:
         ordering = ('name',)
