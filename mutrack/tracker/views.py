@@ -1,5 +1,5 @@
 
-from urllib.parse import quote_plus, unquote_plus
+from urllib.parse import unquote_plus
 
 from django.views import generic
 
@@ -8,6 +8,8 @@ from .models import Album, Artist
 # Views
 
 class IndexView(generic.ListView):
+    """Index view for the tracker application.
+    """
     template_name = 'tracker/index.html'
     context_object_name = 'album_list'
 
@@ -55,6 +57,8 @@ class AlbumView(generic.DetailView):
 
 
 class ArtistView(generic.DetailView):
+    """Detail view for an Artist.
+    """
     model = Artist
 
     def get_object(self):
