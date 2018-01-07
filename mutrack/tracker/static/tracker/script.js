@@ -141,10 +141,10 @@ function markRowsForFilter(cellClass, text) {
  * If the overall search condition is not met, parent 'tr' elements are given
  * the attribute 'filtered-out' with the value 'true'.
  *
- * @param {type} cellClass - CSS class to match to elements
- * @param {type} text - text for filtering based on numerical comparison or
+ * @param {string} cellClass - CSS class to match to elements
+ * @param {string} text - text for filtering based on numerical comparison or
  *     text matching
- * @param {type} date=false - whether the contents of the elements being
+ * @param {string} date=false - whether the contents of the elements being
  *     filtered should be interpreted as dates when text paramter contains an
  *     operator
  */

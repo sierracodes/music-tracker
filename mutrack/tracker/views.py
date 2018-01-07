@@ -86,3 +86,34 @@ class ArtistCreate(generic.edit.CreateView):
     """
     model = Artist
     fields = ['name']
+
+    def get_context_data(self, **kwargs):
+        """Get context data for this view.
+        """
+        # Call super
+        context = super(ArtistCreate, self).get_context_data(**kwargs)
+        context['action'] = 'Add'
+        return context
+
+class ArtistUpdate(generic.edit.UpdateView):
+    """View for updating an Artist.
+    """
+    model = Artist
+    fields = ['name']
+
+    def get_object(self):
+        """Get the object we're looking for, using the artist name.
+        """
+        artist_name = unquote_plus(self.kwargs['artist_name'])
+        super_qset = super(ArtistUpdate, self).get_queryset()
+        filterset = super_qset.filter(name__iexact=artist_name)
+
+        return filterset[0]
+
+    def get_context_data(self, **kwargs):
+        """Get context data for this view.
+        """
+        # Call super
+        context = super(ArtistUpdate, self).get_context_data(**kwargs)
+        context['action'] = 'Edit'
+        return context
