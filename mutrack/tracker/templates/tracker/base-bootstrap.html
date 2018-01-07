@@ -40,9 +40,11 @@
       </div>
     </nav>
 
-    <h1>{% block h1 %}{% endblock %}</h1>
+    {# <h1>{% block h1 %}{% endblock %}</h1> #}
 
+    <div class="container-fluid">
     {% block body-content %}{% endblock %}
+    </div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
