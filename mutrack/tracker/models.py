@@ -76,6 +76,8 @@ class Artist(models.Model):
         return quote_plus(self.name)
 
     def get_absolute_url(self):
+        """Get url to detail page for the model instance.
+        """
         return reverse_lazy('tracker:artist',
                             kwargs={'artist_name': self.quoted_name()})
 
@@ -97,6 +99,13 @@ class Album(models.Model):
 
     def __str__(self):
         return '{} [{}]'.format(self.name, self.artist.name)
+
+    def get_absolute_url(self):
+        """Get url to detail page for the model instance.
+        """
+        return reverse_lazy('tracker:album',
+                            kwargs={'album_name': self.quoted_name(),
+                                    'artist_name': self.artist.quoted_name()})
 
     def artist_name(self):
         return self.artist.name

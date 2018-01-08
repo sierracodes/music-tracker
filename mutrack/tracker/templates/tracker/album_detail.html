@@ -18,8 +18,11 @@
         Search on YouTube</a></li>
 
     </ul>
-    <a href="{% url 'tracker:artist' album.artist.quoted_name %}">
-      All albums by this artist</a>
+    <p><a href="{% url 'tracker:artist' album.artist.quoted_name %}">
+      All albums by this artist</a></p>
+
+    <p><a href="{% url 'tracker:album-update' album.artist.quoted_name album.quoted_name %}" class="btn btn-primary">
+      Edit Album</a></p>
   </div>
 
   <div class="col-5">

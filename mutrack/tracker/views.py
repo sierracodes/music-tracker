@@ -5,7 +5,6 @@ from django.views import generic
 
 from .models import Album, Artist
 
-# Views
 
 class IndexView(generic.ListView):
     """Index view for the tracker application.
@@ -19,6 +18,8 @@ class IndexView(generic.ListView):
         """
         return Album.objects.all()
 
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Album-related views ~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 class AlbumView(generic.DetailView):
     """Detail view for an individual album.
@@ -56,6 +57,55 @@ class AlbumView(generic.DetailView):
         return context
 
 
+class AlbumCreate(generic.edit.CreateView):
+    """View for creating a new Album.
+    """
+    model = Album
+    fields = ['name', 'artist', 'year', 'rating', 'primary_genres',
+              'secondary_genres', 'comments']
+    template_name = 'tracker/generic_form.html'
+
+    def get_context_data(self, **kwargs):
+        """Get context data for this view.
+        """
+        # Call super
+        context = super(AlbumCreate, self).get_context_data(**kwargs)
+        context['action'] = 'Add'
+        context['model_name'] = 'Album'
+        return context
+
+
+class AlbumUpdate(generic.edit.UpdateView):
+    """View for updating an Album.
+    """
+    model = Album
+    fields = ['name', 'artist', 'year', 'rating', 'primary_genres',
+              'secondary_genres', 'comments']
+    template_name = 'tracker/generic_form.html'
+
+    def get_object(self):
+        """Get the object we're looking for.
+        """
+        artist_name = unquote_plus(self.kwargs['artist_name'])
+        album_name = unquote_plus(self.kwargs['album_name'])
+        super_qset = super(AlbumUpdate, self).get_queryset()
+
+        filterset = super_qset.filter(artist__name__iexact=artist_name,
+                                      name__iexact=album_name)
+        return filterset[0]
+
+    def get_context_data(self, **kwargs):
+        """Get context data for this view.
+        """
+        # Call super
+        context = super(AlbumUpdate, self).get_context_data(**kwargs)
+        context['action'] = 'Edit'
+        context['model_name'] = 'Album'
+        return context
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~ Artist-related views ~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
 class ArtistView(generic.DetailView):
     """Detail view for an Artist.
     """
@@ -81,11 +131,13 @@ class ArtistView(generic.DetailView):
 
         return context
 
+
 class ArtistCreate(generic.edit.CreateView):
     """View for creating a new Artist.
     """
     model = Artist
     fields = ['name']
+    template_name = 'tracker/generic_form.html'
 
     def get_context_data(self, **kwargs):
         """Get context data for this view.
@@ -93,13 +145,16 @@ class ArtistCreate(generic.edit.CreateView):
         # Call super
         context = super(ArtistCreate, self).get_context_data(**kwargs)
         context['action'] = 'Add'
+        context['model_name'] = 'Artist'
         return context
+
 
 class ArtistUpdate(generic.edit.UpdateView):
     """View for updating an Artist.
     """
     model = Artist
     fields = ['name']
+    template_name = 'tracker/generic_form.html'
 
     def get_object(self):
         """Get the object we're looking for, using the artist name.
@@ -116,4 +171,5 @@ class ArtistUpdate(generic.edit.UpdateView):
         # Call super
         context = super(ArtistUpdate, self).get_context_data(**kwargs)
         context['action'] = 'Edit'
+        context['model_name'] = 'Artist'
         return context
