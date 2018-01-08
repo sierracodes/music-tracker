@@ -9,7 +9,7 @@ urlpatterns = [
     url(r'^artist/add/?$', views.ArtistCreate.as_view(), name='artist-create'),
     url(r'^artist/(?P<artist_name>[^/\s]+)/?$', views.ArtistView.as_view(),
         name='artist'),
-    url(r'^artist/edit/(?P<artist_name>[^/\s]+)/?$',
+    url(r'^artist/(?P<artist_name>[^/\s]+)/edit/?$',
         views.ArtistUpdate.as_view(), name='artist-update'),
 
     url(r'^album/(?P<artist_name>[^/\s]+)/(?P<album_name>[^/\s]+)/?$',

@@ -89,7 +89,7 @@
       </tr>
       {% for album in album_list %}
       <tr class="album-data-row">
-        <td><a class="block-anchor artist-cell" href="{% url 'tracker:album' album.artist.quoted_name album.quoted_name %}" title="{{ album.comments }}">
+        <td><a class="block-anchor artist-cell" href="{% url 'tracker:artist' album.artist.quoted_name %}" >
           {{ album.artist.name }}</a></td>
         <td><a class="block-anchor album-cell" href="{% url 'tracker:album' album.artist.quoted_name album.quoted_name %}" title="{{ album.comments }}">
           {{ album.name }}</a></td>
