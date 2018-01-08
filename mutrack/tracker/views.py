@@ -3,7 +3,7 @@ from urllib.parse import unquote_plus
 
 from django.views import generic
 
-from .models import Album, Artist
+from .models import Album, Artist, Listen
 
 
 class IndexView(generic.ListView):
@@ -172,4 +172,23 @@ class ArtistUpdate(generic.edit.UpdateView):
         context = super(ArtistUpdate, self).get_context_data(**kwargs)
         context['action'] = 'Edit'
         context['model_name'] = 'Artist'
+        return context
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Listen-related views ~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+class ListenCreate(generic.edit.CreateView):
+    """View for adding a new Listen.
+    """
+    model = Listen
+    fields = ['album', 'listen_date']
+    template_name = 'tracker/generic_form.html'
+
+    def get_context_data(self, **kwargs):
+        """Get context data for this view.
+        """
+        # Call super
+        context = super(ListenCreate, self).get_context_data(**kwargs)
+        context['action'] = 'Add'
+        context['model_name'] = 'Listen'
         return context

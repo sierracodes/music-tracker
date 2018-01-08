@@ -17,4 +17,6 @@ urlpatterns = [
     url(r'^album/add/?$', views.AlbumCreate.as_view(), name='album-create'),
     url(r'^album/(?P<artist_name>[^/\s]+)/(?P<album_name>[^/\s]+)/edit/?$',
         views.AlbumUpdate.as_view(), name='album-update'),
+
+    url(r'^add-listen/?$', views.ListenCreate.as_view(), name='listen-create'),
 ]

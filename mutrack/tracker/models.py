@@ -170,6 +170,14 @@ class Listen(models.Model):
     def __str__(self):
         return '{} ({})'.format(self.album, self.listen_date)
 
+    def get_absolute_url(self):
+        """Get url to detail page for the model instance.
+        """
+        return reverse_lazy(
+            'tracker:album',
+            kwargs={'album_name': self.album.quoted_name(),
+                    'artist_name': self.album.artist.quoted_name()})
+
     def artist_name(self):
         return self.album.artist_name()
 
