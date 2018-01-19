@@ -1,10 +1,11 @@
 
+import copy
 from urllib.parse import unquote_plus
 
 from django.views import generic
 
 from .models import Album, Artist, Listen
-
+from .forms import ListenForm, ListenFormForAlbum
 
 class IndexView(generic.ListView):
     """Index view for the tracker application.
@@ -181,7 +182,7 @@ class ListenCreate(generic.edit.CreateView):
     """View for adding a new Listen.
     """
     model = Listen
-    fields = ['album', 'listen_date']
+    form_class = ListenForm
     template_name = 'tracker/generic_form.html'
 
     def get_context_data(self, **kwargs):
@@ -189,6 +190,39 @@ class ListenCreate(generic.edit.CreateView):
         """
         # Call super
         context = super(ListenCreate, self).get_context_data(**kwargs)
+
+        # Add the action and model name to the context for displaying
         context['action'] = 'Add'
         context['model_name'] = 'Listen'
+
         return context
+
+
+class ListenCreateForAlbum(generic.edit.CreateView):
+    """View for creating a listen for a specific album.
+    """
+    model = Listen
+    form_class = ListenFormForAlbum
+    template_name = 'tracker/listen_for_album_form.html'
+
+    def get_context_data(self, **kwargs):
+        """Get context data for this view.
+        """
+        # Call super
+        context = super(ListenCreateForAlbum, self).get_context_data(**kwargs)
+
+        # Add the action and model name to the context for displaying
+        context['action'] = 'Add'
+        context['model_name'] = 'Listen'
+
+        # Add the album name to the context (currently using Album.__str__)
+        context['album'] = str(self.get_initial()['album'])
+
+        return context
+
+    def get_initial(self):
+        initial = copy.copy(self.initial)
+        initial['album'] = Album.objects.get(
+            name__iexact=unquote_plus(self.kwargs['album_name']),
+            artist__name__iexact=unquote_plus(self.kwargs['artist_name']))
+        return initial
