@@ -26,7 +26,7 @@
   </div>
 
   <div class="col-5">
-    Last 5 listens:
+    {{ album.last_five_listens_label }}
     <ul>
       {% for listen in album.last_five_listens %}
       <li>{{ listen.default_date }}</li>

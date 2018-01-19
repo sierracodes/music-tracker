@@ -122,6 +122,14 @@ class Album(models.Model):
         """Return five most recent listens for this album."""
         return self.all_listens()[:5]
 
+    def last_five_listens_label(self):
+        """Return text label for displaying "last five listens" in a view."""
+        last_five = self.last_five_listens()
+        if not last_five:
+            return ''
+        else:
+            return 'Last {} listens:'.format(min((self.number_of_plays(), 5)))
+
     def last_listen(self):
         """Return most recent listen for this album."""
         all_listens = self.all_listens()
