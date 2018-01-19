@@ -101,7 +101,7 @@
           {{ album.secondary_genres }}</a></td>
         <td><a class="block-anchor plays-cell" href="{% url 'tracker:album' album.artist.quoted_name album.quoted_name %}" title="{{ album.comments }}">
           {{ album.number_of_plays }}</a></td>
-        <td><a class="block-anchor last-listen-cell" href="{% url 'tracker:album' album.artist.quoted_name album.quoted_name %}" title="{{ album.comments }}">
+        <td><a class="block-anchor last-listen-cell" href="{% url 'tracker:listen-create-for-album' album.artist.quoted_name album.quoted_name %}" title="Add Listen">
           {{ album.last_listen_date_mdy }}</a></td>
       </tr>
       {% endfor %}
