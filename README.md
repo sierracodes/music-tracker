@@ -9,13 +9,15 @@ developed to replace a bloated Excel spreadsheet I've been using for years for
 this purpose.
 
 #### Current Features
-* Tabular display of all albums on index page, including rudimentary
-  search/filter functionality.
-* Detail pages (still somewhat sparse) for each album, including link to search
+* Tabular display of all albums on index page, including search/filter
+  functionality including comparison operators for numeric/date fields (i.e.
+    =, <, >, <=, >=), and logical or operation with pipe |
+* Detail pages for each album, including link to search
   for the album on YouTube
-* Detail pages (also sparse) for artists; currently just a list of all the
+* Detail pages for artists, including a list of all the
   albums in the database by that artist
+* Listen tracking for each album
+* Add/edit functionality for artist/album
 
 #### To do
-* Implement listen logging
-* Add ability to add/edit albums
+* Add ability to delete albums/artists
