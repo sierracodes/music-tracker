@@ -21,3 +21,5 @@ this purpose.
 
 #### To do
 * Add ability to delete albums/artists
+* Improve responsiveness for future mobile support, e.g. add breakpoints to
+  hide some table columns for less wide screens
