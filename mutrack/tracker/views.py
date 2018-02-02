@@ -3,6 +3,7 @@ import copy
 from urllib.parse import unquote_plus
 
 from django.views import generic
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Album, Artist, Listen
 from .forms import ListenForm, ListenFormForAlbum
@@ -58,7 +59,7 @@ class AlbumView(generic.DetailView):
         return context
 
 
-class AlbumCreate(generic.edit.CreateView):
+class AlbumCreate(LoginRequiredMixin, generic.edit.CreateView):
     """View for creating a new Album.
     """
     model = Album
@@ -76,7 +77,7 @@ class AlbumCreate(generic.edit.CreateView):
         return context
 
 
-class AlbumUpdate(generic.edit.UpdateView):
+class AlbumUpdate(LoginRequiredMixin, generic.edit.UpdateView):
     """View for updating an Album.
     """
     model = Album
@@ -133,7 +134,7 @@ class ArtistView(generic.DetailView):
         return context
 
 
-class ArtistCreate(generic.edit.CreateView):
+class ArtistCreate(LoginRequiredMixin, generic.edit.CreateView):
     """View for creating a new Artist.
     """
     model = Artist
@@ -150,7 +151,7 @@ class ArtistCreate(generic.edit.CreateView):
         return context
 
 
-class ArtistUpdate(generic.edit.UpdateView):
+class ArtistUpdate(LoginRequiredMixin, generic.edit.UpdateView):
     """View for updating an Artist.
     """
     model = Artist
@@ -178,7 +179,7 @@ class ArtistUpdate(generic.edit.UpdateView):
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Listen-related views ~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-class ListenCreate(generic.edit.CreateView):
+class ListenCreate(LoginRequiredMixin, generic.edit.CreateView):
     """View for adding a new Listen.
     """
     model = Listen
@@ -198,7 +199,7 @@ class ListenCreate(generic.edit.CreateView):
         return context
 
 
-class ListenCreateForAlbum(generic.edit.CreateView):
+class ListenCreateForAlbum(LoginRequiredMixin, generic.edit.CreateView):
     """View for creating a listen for a specific album.
     """
     model = Listen
