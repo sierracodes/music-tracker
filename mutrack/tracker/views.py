@@ -8,7 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Album, Artist, Listen
 from .forms import ListenForm, ListenFormForAlbum
 
-class IndexView(generic.ListView):
+class IndexView(LoginRequiredMixin, generic.ListView):
     """Index view for the tracker application.
     """
     template_name = 'tracker/index.html'
@@ -23,7 +23,7 @@ class IndexView(generic.ListView):
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Album-related views ~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-class AlbumView(generic.DetailView):
+class AlbumView(LoginRequiredMixin, generic.DetailView):
     """Detail view for an individual album.
     """
     model = Album
@@ -108,7 +108,7 @@ class AlbumUpdate(LoginRequiredMixin, generic.edit.UpdateView):
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~ Artist-related views ~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-class ArtistView(generic.DetailView):
+class ArtistView(LoginRequiredMixin, generic.DetailView):
     """Detail view for an Artist.
     """
     model = Artist
