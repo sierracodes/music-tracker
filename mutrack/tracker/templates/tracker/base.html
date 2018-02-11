@@ -27,6 +27,17 @@
       <li class="nav-item active">
         <a class="nav-item active nav-link" href="{% url 'tracker:listen-create' %}">Add Listen</a>
       </li>
+      <!-- Log in or log out button -->
+      {% if user.is_authenticated %}
+      <li class="nav-item active">
+        <a class="nav-item active nav-link" href="{% url 'logout' %}">Log out</a>
+        {# <a class="nav-item active nav-link" href="{% url 'logout' %}">Log out {{ user.username }}</a> #}
+      </li>
+      {% else %}
+      <li class="nav-item active">
+        <a class="nav-item active nav-link" href="{% url 'login' %}">Log in</a>
+      </li>
+      {% endif %}
     </ul>
     <!-- <form class="form-inline mt-2 mt-md-0">
       <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
