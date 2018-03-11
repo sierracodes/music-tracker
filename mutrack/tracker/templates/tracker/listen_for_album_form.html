@@ -1,0 +1,14 @@
+
+{% extends "tracker/base.html" %}
+
+{% block title %}{{ action }} {{ model_name }}{% endblock %}
+{% block h1 %}{{ action }} {{ model_name }}{% endblock %}
+
+{% block body-content %}
+<p>Album: {{ album }}</p>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" value="Submit" />
+</form>
+{% endblock %}

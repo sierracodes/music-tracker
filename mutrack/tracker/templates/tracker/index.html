@@ -1,0 +1,120 @@
+{% extends "tracker/base.html" %}
+
+{% load static %}
+{% block headblock %}
+<link rel="stylesheet" type="text/css" href="{% static 'tracker/style.css' %}" />
+{% endblock %}
+
+{% block title %}Album Tracker{% endblock %}
+{# {% block h1 %}Album Tracker{% endblock %} #}
+
+
+{% block body-content %}
+
+<h2>All Albums</h2>
+
+{# <form class="form-inline">#}
+  {# <div class="form-group">#}
+    {# <select id="search-selector">#}
+      {# <option value="artist">Artist</option>#}
+      {# <option value="album">Album</option>#}
+      {# <option value="year">Year</option>#}
+      {# <option value="genres">Genres</option>#}
+    {# </select>#}
+  {# </div>#}
+  {# <div class="form-group mx-sm-3">#}
+      {# <label for="album-search" class="sr-only">Search</label>#}
+      {# <input type="search" class="form-control" id="album-search" placeholder="Search">#}
+  {# </div>#}
+{# </form>#}
+
+
+<div class="table-responsive">
+  <table class="table table-hover table-sm">
+    <thead>
+      <tr>
+        <th>Artist</th>
+        <th>Album</th>
+        <th>Year</th>
+        <th>Rating</th>
+        <th>Genres</th>
+        <th>Plays</th>
+        <th>Last Listen</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr id="search-row">
+        <td>
+          <div class="form-group">
+              <label for="album-search" class="sr-only">Artist</label>
+              <input type="search" class="form-control" id="artist-search" placeholder="Artist">
+          </div>
+        </td>
+        <td>
+          <div class="form-group">
+              <label for="album-search" class="sr-only">Album</label>
+              <input type="search" class="form-control" id="album-search" placeholder="Album">
+          </div>
+        </td>
+        <td class="search-data-cell">
+          <div class="form-group">
+              <label for="album-search" class="sr-only">Year</label>
+              <input type="search" class="form-control" id="year-search" placeholder="Year">
+          </div>
+        </td>
+        <td>
+          <div class="form-group">
+              <label for="album-search" class="sr-only">Rating</label>
+              <input type="search" class="form-control" id="rating-search" placeholder="Rating">
+          </div>
+        </td>
+        <td>
+          <div class="form-group">
+              <label for="album-search" class="sr-only">Genres</label>
+              <input type="search" class="form-control" id="genre-search" placeholder="Genres">
+          </div>
+        </td>
+        <td>
+          <div class="form-group">
+              <label for="album-search" class="sr-only">Plays</label>
+              <input type="search" class="form-control" id="plays-search" placeholder="Plays">
+          </div>
+        </td>
+        <td>
+          <div class="form-group">
+              <label for="album-search" class="sr-only">Last Listen</label>
+              <input type="search" class="form-control" id="last-listen-search" placeholder="Last Listen">
+          </div>
+        </td>
+      </tr>
+      {% for album in album_list %}
+      <tr class="album-data-row">
+        <td><a class="block-anchor artist-cell" href="{% url 'tracker:artist' album.artist.quoted_name %}" >
+          {{ album.artist.name }}</a></td>
+        <td><a class="block-anchor album-cell" href="{% url 'tracker:album' album.artist.quoted_name album.quoted_name %}" title="{{ album.comments }}">
+          {{ album.name }}</a></td>
+        <td><a class="block-anchor year-cell" href="{% url 'tracker:album' album.artist.quoted_name album.quoted_name %}" title="{{ album.comments }}">
+          {{ album.year }}</a></td>
+        <td><a class="block-anchor rating-cell" href="{% url 'tracker:album' album.artist.quoted_name album.quoted_name %}" title="{{ album.comments }}">
+          {{ album.rating }}</a></td>
+        <td><a class="block-anchor genre-cell" href="{% url 'tracker:album' album.artist.quoted_name album.quoted_name %}" title="{{ album.comments }}">
+          {{ album.secondary_genres }}</a></td>
+        <td><a class="block-anchor plays-cell" href="{% url 'tracker:album' album.artist.quoted_name album.quoted_name %}" title="{{ album.comments }}">
+          {{ album.number_of_plays }}</a></td>
+        <td><a class="block-anchor last-listen-cell" href="{% url 'tracker:listen-create-for-album' album.artist.quoted_name album.quoted_name %}" title="Add Listen">
+          {{ album.last_listen_date_mdy }}</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+
+  </table>
+</div>
+
+
+{% endblock %}
+
+
+{# Load some extra javasctipt #}
+{% block end-of-body %}
+<script type="text/javascript" src="{% static 'tracker/script.js' %}"></script>
+{% endblock %}

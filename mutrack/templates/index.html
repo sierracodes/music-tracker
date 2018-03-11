@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %} Welcome {% endblock %}
+{% block h1 %} Welcome! {% endblock %}
+
+
+{% block body-content %}
+<p>Hi there! This is Sierra's Django demo site. It currently houses her
+<a href="{% url 'tracker:index' %}">album tracking application</a>.</p>
+
+<p>The application is still being developed, so you'll need to log in.</p>
+{% endblock %}

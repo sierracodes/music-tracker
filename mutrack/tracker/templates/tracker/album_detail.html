@@ -1,0 +1,46 @@
+{% extends "tracker/base.html" %}
+
+{% block title %}{{ album.artist.name }} &ndash; {{ album.name }}{% endblock %}
+{% block h1 %}<i>{{ album.name }}</i>{% endblock %}
+
+
+{% block body-content %}
+
+<div class="row">
+
+  <div class="col-7">
+    <ul>
+      <li>Artist: {{ album.artist.name }}</li>
+      <li>Year: {{ album.year }}</li>
+      <li>Genres: {{ album.secondary_genres }}</li>
+      <li>Rating: {{ album.rating }}</li>
+      <li>Comments: {{ album.comments }}</li>
+      <li><a href={{ youtube_search_link }} target=_blank rel="noopener noreferrer">
+        Search on YouTube</a></li>
+
+    </ul>
+    <p><a href="{% url 'tracker:artist' album.artist.quoted_name %}">
+      All albums by this artist</a></p>
+
+    <p><a href="{% url 'tracker:album-update' album.artist.quoted_name album.quoted_name %}" class="btn btn-primary">
+      Edit Album</a></p>
+
+      <p><a href="{% url 'tracker:listen-create-for-album' album.artist.quoted_name album.quoted_name %}" class="btn btn-primary">
+        Add Listen</a></p>
+  </div>
+
+  <div class="col-5">
+    {{ album.last_five_listens_label }}
+    <ul>
+      {% for listen in album.last_five_listens %}
+      <li>{{ listen.default_date }}</li>
+      {% endfor %}
+    </ul>
+    <p>Total number of plays: {{ album.number_of_plays }}</p>
+
+  </div>
+
+</div class="row">
+
+
+{% endblock %}
