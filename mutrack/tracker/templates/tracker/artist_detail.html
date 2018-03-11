@@ -1,0 +1,18 @@
+{% extends "tracker/base.html" %}
+
+{% block title %}{{ artist.name }}{% endblock %}
+{% block h1 %}{{ artist.name }}{% endblock %}
+
+
+{% block body-content %}
+
+<h2>Albums by this artist:</h2>
+<ul>
+  {% for album in albums_by_artist %}
+  <li><a href="{% url 'tracker:album' artist.quoted_name album.quoted_name %}">
+    <i>{{ album.name }}</i> ({{ album.year }})</a> ({{ album.rating }})</li>
+  {% endfor %}
+</ul>
+<a href="{% url 'tracker:artist-update' artist.quoted_name %}" class="btn btn-primary">Edit Artist</a>
+
+{% endblock %}

@@ -1,0 +1,14 @@
+
+.block-anchor {
+  color: green;
+  display: block;
+}
+
+.block-anchor:hover {
+  color: green;
+  text-decoration: none;
+}
+
+#search-row .form-group {
+  margin: 0;
+}

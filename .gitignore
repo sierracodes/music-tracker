@@ -1,0 +1,13 @@
+# Ignore emacs auto-generated files
+*~
+.*~
+\#*
+
+# Ignore .pyc files
+*.pyc
+
+# sqlite database
+db.sqlite3
+
+# Mac files
+.DS_Store
