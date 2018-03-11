@@ -89,35 +89,61 @@ function markRowsForFilter(cellClass, text) {
     }
   } else {
 
+    var selector = '.CLS:not('.replace('CLS', cellClass);
+
     // Check for | for 'or'
     if (text.includes('|')) {
       let textSplits = text.split('|');
-      var selector = '.CLS:not(';
 
       // Construct selector
       for (let i = 0; i < textSplits.length; i++) {
         let subText = textSplits[i].trim();
         selector = selector.concat(
-          ".CLS:containsNoCase('TEXT')".replace('TEXT', subText));
+          getIndividualFilterSelector(cellClass, subText));
         if (i != textSplits.length-1) {
           selector = selector.concat(', ');
         }
       }
-      selector = selector.concat(')')
 
     } else {
       // Find cells with given class that don't contain the text
-      var selector =
-        ".CLS:not(.CLS:containsNoCase('TEXT'))".replace('TEXT', text);
+      selector = selector.concat(getIndividualFilterSelector(cellClass, text));
     }
 
-    selector = stringReplaceAll(selector, 'CLS', cellClass);
+    selector = selector.concat(')')
+
+    console.log(selector);
 
     // Mark the rows using the 'filtered-out' attribute
     let nomatch = $(selector);
     let rowsToMark = nomatch.parents('tr');
     rowsToMark.attr('filtered-out', 'true');
   }
+}
+
+
+/**
+ * getIndividualFilterSelector - get selector for text filtering
+ *
+ * Get a CSS selector (for jQuery) for selecting all elements of a given
+ * class based on some text from a search input.
+ *
+ * Nominally, the selector will simply do case-insensitive string matching
+ * based on filterText. This behavior is changed if filterText contains any
+ * of the following special characters:
+ * - If the text starts with '!', will return a selector for elements that
+ *   do *not* contain the given text
+ *
+ * @param  {string} cellClass  class of elements being filtered
+ * @param  {string} filterText text we are filtering on
+ * @return {type}            description
+ */
+function getIndividualFilterSelector(cellClass, filterText) {
+  let selector = (
+    ".CLS:containsNoCase('TEXT')".replace('TEXT', filterText));
+  selector = selector.replace('CLS', cellClass);
+
+  return selector;
 }
 
 /**
