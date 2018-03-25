@@ -5,13 +5,20 @@ Test module for models in the tracker application.
 from django.test import TestCase
 from django.db.utils import IntegrityError
 
-from .models import Artist
+from .models import Artist, Album
 
 
 class ArtistTestCase(TestCase):
+    """Test fixture for the Artist model
+    """
+
+    def test_create(self):
+        """Test creation of an Artist object
+        """
+        Artist.objects.create(name='Queen')
 
     def test_unique_name(self):
-        """Verify that no two artists can have the same name.
+        """Verify that no two artists can have the same name
         """
         Artist.objects.create(name='Queen')
 
