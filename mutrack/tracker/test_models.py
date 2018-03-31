@@ -65,9 +65,9 @@ class AlbumTestCase(TestCase):
 class ListenTestCase(TestCase):
 
     def setUp(self):
-        queen = Artist.objects.create(name='Queen')
+        self.artist = Artist.objects.create(name='Queen')
         self.album = Album.objects.create(name='A Day At The Races', year=1976,
-                                          rating=5, artist=queen)
+                                          rating=5, artist=self.artist)
 
     def test_create(self):
         """Test creation of a Listen object
@@ -129,3 +129,40 @@ class ListenTestCase(TestCase):
         # Unknown date
         listen = Listen.objects.create(album=self.album, listen_date=None)
         self.assertEqual(listen.default_date(), 'Unknown date')
+
+    def test_sorting(self):
+        """Test default sorting behavior of Listens
+        """
+        # Create some listens with some arbitrary unordered dates
+        dates = [
+            datetime.date(2014, 11, 1),
+            datetime.date(2017, 4, 12),
+            datetime.date(2017, 4, 11),
+            datetime.date(1987, 6, 30),
+            datetime.date(2018, 2, 7)]
+
+        listens = []
+        for date in dates:
+            listens.append(
+                Listen.objects.create(album=self.album, listen_date=date))
+
+        # Verify that when we ask for all of the Listens, they're returned in
+        # order of date, newest first
+        sorted_listens = sorted(
+            listens, key=lambda l: l.listen_date, reverse=True)
+        for i, listen in enumerate(Listen.objects.all()):
+            self.assertEqual(listen, sorted_listens[i])
+
+        # Add some listens that are different albums and verify everything is
+        # still returned in listen order
+        opera = Album.objects.create(name='A Night At The Opera', year=1975,
+                                     rating=5, artist=self.artist)
+        listens.append(Listen.objects.create(
+            album=opera, listen_date=datetime.date(1979, 4, 11)))
+        listens.append(Listen.objects.create(
+            album=opera, listen_date=datetime.date(2018, 12, 10)))
+
+        sorted_listens = sorted(
+            listens, key=lambda l: l.listen_date, reverse=True)
+        for i, listen in enumerate(Listen.objects.all()):
+            self.assertEqual(listen, sorted_listens[i])
