@@ -195,7 +195,7 @@ class Listen(models.Model):
     def slash_date_ymd(self):
         """Return listen date in YYYY/MM/DD format.
 
-        If no date, 'Unknown date' is returned.
+        Month and day are zero-padded. If no date, 'Unknown date' is returned.
         """
         if self.listen_date is not None:
             return '{:04d}/{:02d}/{:02d}'.format(self.listen_date.year,
@@ -205,9 +205,10 @@ class Listen(models.Model):
             return 'Unknown date'
 
     def slash_date_mdy(self):
-        """Return listen date in MM/DD/YY format.
+        """Return listen date in M/D/YY format.
 
-        If no date, 'Unknown date' is returned.
+        Month and day may be one or two digits (no zero-padding). If no date,
+        'Unknown date' is returned.
         """
         if self.listen_date is not None:
             return '{:d}/{:d}/{:02d}'.format(self.listen_date.month,
