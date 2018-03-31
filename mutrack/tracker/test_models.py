@@ -89,43 +89,43 @@ class ListenTestCase(TestCase):
         """Test slash_date_mdy method of Listen
         """
         # One-digit month, two-digit day
-        listen = Listen(album=self.album,
-                        listen_date=datetime.date(2016, 5, 12))
+        listen = Listen.objects.create(album=self.album,
+                                       listen_date=datetime.date(2016, 5, 12))
         self.assertEqual(listen.slash_date_mdy(), '5/12/16')
 
         # Two-digit month, one-digit day
-        listen = Listen(album=self.album,
-                        listen_date=datetime.date(2016, 11, 1))
+        listen = Listen.objects.create(album=self.album,
+                                       listen_date=datetime.date(2016, 11, 1))
         self.assertEqual(listen.slash_date_mdy(), '11/1/16')
 
         # Test for unknown date
-        listen = Listen(album=self.album, listen_date=None)
+        listen = Listen.objects.create(album=self.album, listen_date=None)
         self.assertEqual(listen.slash_date_mdy(), 'Unknown date')
 
     def test_slash_date_ymd(self):
         """Test slash_date_mdy method of Listen
         """
         # One-digit month, two-digit day
-        listen = Listen(album=self.album,
-                        listen_date=datetime.date(2016, 5, 12))
+        listen = Listen.objects.create(album=self.album,
+                                       listen_date=datetime.date(2016, 5, 12))
         self.assertEqual(listen.slash_date_ymd(), '2016/05/12')
 
         # Two-digit month, one-digit day
-        listen = Listen(album=self.album,
-                        listen_date=datetime.date(2014, 11, 1))
+        listen = Listen.objects.create(album=self.album,
+                                       listen_date=datetime.date(2014, 11, 1))
         self.assertEqual(listen.slash_date_ymd(), '2014/11/01')
 
         # Test for unknown date
-        listen = Listen(album=self.album, listen_date=None)
+        listen = Listen.objects.create(album=self.album, listen_date=None)
         self.assertEqual(listen.slash_date_ymd(), 'Unknown date')
 
     def test_default_date(self):
         """Test default_date method of Listen
         """
         date = datetime.date(2016, 5, 12)
-        listen = Listen(album=self.album, listen_date=date)
+        listen = Listen.objects.create(album=self.album, listen_date=date)
         self.assertEqual(listen.default_date(), date)
 
         # Unknown date
-        listen = Listen(album=self.album, listen_date=None)
+        listen = Listen.objects.create(album=self.album, listen_date=None)
         self.assertEqual(listen.default_date(), 'Unknown date')
