@@ -212,7 +212,7 @@ class Listen(models.Model):
         if self.listen_date is not None:
             return '{:d}/{:d}/{:02d}'.format(self.listen_date.month,
                                              self.listen_date.day,
-                                             self.listen_date.year%100)
+                                             self.listen_date.year % 100)
         else:
             return 'Unknown date'
 

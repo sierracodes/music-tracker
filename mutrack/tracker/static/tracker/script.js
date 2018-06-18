@@ -113,8 +113,6 @@ function markRowsForFilter(cellClass, text) {
 
     selector = selector.concat(')')
 
-    console.log(selector);
-
     // Mark the rows using the 'filtered-out' attribute
     let nomatch = $(selector);
     let rowsToMark = nomatch.parents('tr');
