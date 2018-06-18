@@ -82,6 +82,7 @@ function filterRows() {
 function markRowsForFilter(cellClass, text) {
   text = text.trim();
 
+  // Split selections separated by commas and call function recursively
   if (text.includes(',')) {
     let textSplits = text.split(',');
     for (let i = 0; i < textSplits.length; i++) {
@@ -134,13 +135,24 @@ function markRowsForFilter(cellClass, text) {
  * - If the text starts with '!', will return a selector for elements that
  *   do *not* contain the given text
  *
+ * filterText should not have any leading/trailing whitespace
+ *
  * @param  {string} cellClass  class of elements being filtered
  * @param  {string} filterText text we are filtering on
  * @return {type}            description
  */
 function getIndividualFilterSelector(cellClass, filterText) {
-  let selector = (
-    ".CLS:containsNoCase('TEXT')".replace('TEXT', filterText));
+
+  // Put together base selector
+  if (filterText.startsWith('!')) {
+    filterText = filterText.substring(1);
+    var selector =
+      ".CLS:not(.CLS:containsNoCase('TEXT'))".replace('CLS', cellClass);
+  } else {
+    var selector = ".CLS:containsNoCase('TEXT')";
+  }
+  // Put in the filtering text and class
+  selector = selector.replace('TEXT', filterText);
   selector = selector.replace('CLS', cellClass);
 
   return selector;
