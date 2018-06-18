@@ -11,7 +11,7 @@ this purpose.
 #### Current Features
 * Tabular display of all albums on index page, including search/filter
   functionality including comparison operators for numeric/date fields (i.e.
-    =, <, >, <=, >=), and logical or operation with pipe |
+    =, <, >, <=, >=), logical or ("|") and logical not ("!") operators
 * Detail pages for each album, including link to search
   for the album on YouTube
 * Detail pages for artists, including a list of all the

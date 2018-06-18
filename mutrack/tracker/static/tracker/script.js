@@ -251,7 +251,7 @@ function stringReplaceAll(text, toReplace, replaceWith) {
 /**
  * hasOperator - Determine whether a search string starts with an operator
  *
- * @param {string} text
+ * @param {string} text (should have no left padding)
  * @return {boolean} true if text starts with operator, false otherwise
  */
 function hasOperator(text) {
@@ -273,6 +273,8 @@ function hasOperator(text) {
  * Resulting test function always takes a string as an input. Operators
  * include: <, >, <=, >=, =.
  *
+ * Text should have no whitespace padding.
+ *
  * @param {string} text - the text to create the comparison function from
  * @param {boolean} date=false - if true and operator is found, treat input to
  *   returned test function as date string
@@ -285,8 +287,13 @@ function getComparisonFunction(text, date=false) {
   // If no operator is present in the text, just do case-insensitive string
   // matching
   let stringMatch = (!(hasOperator(text)));
-  if (stringMatch) {
-    var testFn = cellStr => cellStr.toUpperCase().includes(text.toUpperCase());
+  if (stringMatch && text.startsWith('!')) {
+    text = text.substring(1);
+    var testFn =
+      cellStr => (!cellStr.toUpperCase().includes(text.toUpperCase()));
+  } else if (stringMatch) {
+    var testFn =
+      cellStr => cellStr.toUpperCase().includes(text.toUpperCase());
   } else {
     // Define function for casting text to number
     if (date) {
