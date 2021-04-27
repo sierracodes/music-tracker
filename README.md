@@ -8,18 +8,26 @@ database if it's the first time I've listened to it. The application is being
 developed to replace a bloated Excel spreadsheet I've been using for years for
 this purpose.
 
-#### Current Features
-* Tabular display of all albums on index page, including search/filter
-  functionality including comparison operators for numeric/date fields (i.e.
-    =, <, >, <=, >=), logical or ("|") and logical not ("!") operators
-* Detail pages for each album, including link to search
-  for the album on YouTube
-* Detail pages for artists, including a list of all the
-  albums in the database by that artist
-* Listen tracking for each album
-* Add/edit functionality for artist/album
+## Features
 
-#### To do
-* Add ability to delete albums/artists
-* Improve responsiveness for future mobile support, e.g. add breakpoints to
-  hide some table columns for less wide screens
+### Single-column filtering
+
+Text-based filtering including logical and (","), logical or ("|"), and logical not ("!") operators.
+
+<img src="docs/img/genre-filter.gif" alt="Gif demonstrating filtering tabular album data based on genre">
+
+### Multi-column filtering
+
+Filter on multiple columns at once, and use numerical comparison operators for numerical and date fields.
+
+<img src="docs/img/multi-filter.gif" alt="Gif demonstrating filtering tabular album data based on genre, plus album year and last listen date">
+
+### Adding new artists, albums, and album listens
+
+<img src="docs/img/new-artist-and-album.gif" alt="Gif showing flow of adding a new artist, then album, then listen to the table">
+
+### Open in YouTube
+
+One-click link for searching for an album on YouTube.
+
+<img src="docs/img/open-in-youtube.gif" alt="Gif showing flow of adding a new artist, then album, then listen to the table">
